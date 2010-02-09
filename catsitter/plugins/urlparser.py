@@ -36,9 +36,7 @@ def handler(urlline=None):
         if page.info().get('status', '200 OK') != '200 OK':
             return
 
-        htmlstring = decode(page.read())
-
-        html = fromstring(htmlstring)
+        html = fromstring(page.read())
         found = ''
 
         for element in ['title', 'h1', 'h2']:
