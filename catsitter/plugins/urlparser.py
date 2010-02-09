@@ -52,9 +52,7 @@ def handler(urlline=None):
                 title = title.split('\n')
                 title = map(lambda l: l.strip(), title)
 
-                title = u'«%s»' % u' '.join(title).strip()
-
-                found = title
+                found = u' '.join(title).strip()
                 break
             except IndexError:
                 continue
@@ -63,7 +61,6 @@ def handler(urlline=None):
             found += ' (%s)' % page.geturl()
 
         if found:
-            result.append(found.strip())
+            result.append(u'>> ' + found.strip())
 
-    if result:
-        return [' - '.join(result)]
+    return result
