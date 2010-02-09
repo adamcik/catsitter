@@ -46,8 +46,13 @@ def sit(item, name):
 
     days = ['Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', '', '']
     today = days[date.today().weekday()]
-    menu = root.cssselect('#menytable')[0]
+    menu = root.cssselect('#menytable')
     meals = []
+
+    if not menu:
+        return ''
+
+    menu = menu[0]
 
     for tr in menu.cssselect('tr'):
         day = tr.cssselect('td.ukedag')
@@ -80,5 +85,7 @@ def handler():
     result.append(samfundet())
     result.append(sit(36444, 'Hangaren'))
     result.append(sit(36447, 'Realfag'))
+
+    result = map(lambda l: l.replace('\t', ' '), result)
 
     return result
