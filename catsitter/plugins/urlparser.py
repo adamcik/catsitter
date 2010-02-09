@@ -10,7 +10,6 @@ from catsitter import decode, register
 
 RE_URL = re.compile(r'\b(?P<scheme>[a-z+]+://)?'
                     r'(?P<host>(?:[^ ]+\.)+\w+)'
-                    r'(?P<port>:[0-9]*)?'
                     r'(?P<path>/[^?#]*)?'
                     r'(?P<query>\?[^#]*)?\b')
 
@@ -19,18 +18,14 @@ def handler(urlline=None):
 
     result = []
 
-    for m in RE_URL.findall(urlline):
-        if not m:
-            continue
-
-        scheme, host, port, path, query = m
-
+    for scheme, host, path, query in RE_URL.findall(urlline):
         if scheme and not re.match('https?://', scheme):
+            continue
+        elif query:
             continue
 
         url = ''.join([scheme or 'http://',
                        host,
-                       port or '',
                        path or '',
                        query or ''])
         try:
