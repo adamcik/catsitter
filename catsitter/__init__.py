@@ -20,4 +20,5 @@ def register(regexp):
     return wrapper
 
 def get_data_file(name):
-    return os.path.join('data', name)
+    file = os.path.dirname(__file__)
+    return os.path.join(file, '..', 'data', name)
