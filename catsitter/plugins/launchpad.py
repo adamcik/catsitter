@@ -17,7 +17,11 @@ def handler(bugline=None):
     result = []
 
     for bug in re.findall('(?:LP)?#(\d+)', bugline):
-        url = urllib2.urlopen(BUG_API_URL % bug)
+        try:
+            url = urllib2.urlopen(BUG_API_URL % bug)
+        except urllib2.HTTPError, e:
+            continue
+
         parser = Parser()
         message = parser.parse(url)
 
