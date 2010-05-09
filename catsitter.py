@@ -9,7 +9,7 @@ import catsitter
 
 from optparse import OptionParser
 
-socket.setdefaulttimeout(15)
+socket.setdefaulttimeout(25)
 
 opener = urllib2.build_opener()
 opener.addheaders = [('User-agent', 'catsitter')]
