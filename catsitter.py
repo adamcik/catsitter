@@ -21,6 +21,16 @@ def optparse():
     parser.add_option('--settings')
     return parser
 
+def decode(string):
+    if isinstance(string, unicode) or string is None:
+        return string
+
+    try:
+        string = string.decode('utf-8')
+    except UnicodeDecodeError:
+        string = string.decode('iso-8859-1')
+    return string
+
 def config():
     results = []
 
