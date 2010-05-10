@@ -63,7 +63,7 @@ def handler(urlline=None):
 
         try:
             found = found.encode('latin1').decode('utf-8')
-        except UnicodeDecodeError:
+        except (UnicodeDecodeError, UnicodeEncodeError):
             pass
 
         if url != page.geturl():
