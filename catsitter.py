@@ -68,7 +68,7 @@ def main():
     if options.config:
         config()
     elif len(args) == 4:
-        dispatch(*args)
+        dispatch(*map(decode, args))
     else:
         parser.print_usage()
 
