@@ -43,7 +43,7 @@ def dispatch(nick, target, source, message):
     results = []
 
     for regexp, func in catsitter.registry:
-        match = re.search('^($nick: ?)?(%s)$' % regexp, message)
+        match = re.search('^($nick: ?)?(%s)$' % regexp, message, re.UNICODE)
 
         if not match:
             continue
