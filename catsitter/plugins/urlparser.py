@@ -11,8 +11,8 @@ from catsitter import decode, register
 
 RE_URL = re.compile(r'(?:\b|[(])(?P<scheme>[a-z+]+://)?'
                     r'(?P<host>(?:[^ #?://]+\.)+[^ #?://]+)'
-                    r'(?P<path>/[^?#]*)?'
-                    r'(?P<query>\?[^#]*)?(?:\b|[,.?!])', re.UNICODE)
+                    r'(?P<path>/[^?# ]*)?'
+                    r'(?P<query>\?[^# ]*)?(?:\b|[,.?!])', re.UNICODE)
 
 
 def parse_url(line):
