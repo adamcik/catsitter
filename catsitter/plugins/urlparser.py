@@ -9,7 +9,7 @@ import urllib2
 from lxml.html import fromstring
 from catsitter import decode, register
 
-RE_URL = re.compile(r'(?:\b|[(])(?P<scheme>[a-z+]+://)?'
+RE_URL = re.compile(r'(?:\b|[(])(?P<scheme>https?://)?'
                     r'(?P<host>(?:[^ #?://]+\.)+[^ #?://]+)'
                     r'(?P<path>/[^?# ]*)?'
                     r'(?P<query>\?[^# ]*)?(?:\b|[,.?!])', re.UNICODE)
@@ -17,7 +17,7 @@ RE_URL = re.compile(r'(?:\b|[(])(?P<scheme>[a-z+]+://)?'
 
 def parse_url(line):
     for scheme, host, path, query in RE_URL.findall(line):
-        if scheme and not re.match('https?://', scheme):
+        if not scheme:
             continue
 
         scheme = scheme.encode('utf-8') or 'http://'
