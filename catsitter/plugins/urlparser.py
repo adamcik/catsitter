@@ -38,8 +38,12 @@ def pretty_url(line):
 def handler(urlline=None):
 
     result = []
+    blacklist = r'(twitter.com|dpaste.com)'
 
     for url in parse_url(urlline):
+        if re.search(blacklist, url):
+            continue
+
         try:
             page = urllib2.urlopen(url)
         except IOError:
