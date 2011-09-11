@@ -37,6 +37,17 @@ def pretty_url(line):
 def normalise_url(url):
     return re.sub(r'^https?://(www\.)?', '', url.rstrip('/'))
 
+def title_from_elements(html, *elements):
+    for element in elements:
+        try:
+            title = html.cssselect(element)[0].text_content()
+            title = title.split('\n')
+            title = map(lambda l: l.strip(), title)
+            return u' '.join(title).strip()
+        except IndexError:
+            continue
+    return ''
+
 @register('(?P<urlline>[^!].*\w+\.\w+.*)')
 def handler(urlline=None):
 
@@ -58,15 +69,10 @@ def handler(urlline=None):
         html = fromstring(page.read())
         found = ''
 
-        for element in ['title', 'h1', 'h2']:
-            try:
-                title = html.cssselect(element)[0].text_content()
-                title = title.split('\n')
-                title = map(lambda l: l.strip(), title)
-                found = u' '.join(title).strip()
-                break
-            except IndexError:
-                continue
+        try:
+            found = html.cssselect('meta[property="og:title"]')[0].attrib['content']
+        except IndexError:
+            found = title_from_elements(html, 'title', 'h1', 'h2')
 
         try:
             found = found.encode('latin1').decode('utf-8')
