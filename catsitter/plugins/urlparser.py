@@ -34,6 +34,9 @@ def pretty_url(line):
         query = decode(urllib.unquote(query)) or ''
         return u''.join([scheme, host, path, query])
 
+def normalise_url(url):
+    return re.sub(r'^https?://(www\.)?', '', url.rstrip('/'))
+
 @register('(?P<urlline>[^!].*\w+\.\w+.*)')
 def handler(urlline=None):
 
@@ -70,7 +73,7 @@ def handler(urlline=None):
         except (UnicodeDecodeError, UnicodeEncodeError):
             pass
 
-        if url != page.geturl():
+        if normalise_url(url) != normalise_url(page.geturl()):
             found += u' (%s)' % pretty_url(page.geturl())
 
         if found:
